@@ -13,7 +13,13 @@ int main()
     cout<<"Do you want to add a student, print out the students, delete a student, or quit?"<<endl;
     cin.getline(input, sizeof(input));
     strupper(input);
-    
+    if (strcmp(input, "ADD") == 0){
+      
+    }
+    else if (strcmp(input, "PRINT") == 0){
+      
+    }
+    else if (strcmp(input, 
   }
 }
 
