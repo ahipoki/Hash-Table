@@ -83,7 +83,7 @@ int main()
 void strupper(char* str){
   int len = strlen(str);
   for (int i = 0; i < len; i++){
-    str[i] = touppper(str[i]);
+    str[i] = toupper(str[i]);
   }
 }
 
@@ -192,7 +192,7 @@ void generateRandom(Node**& hashTable, vector<char*>* firstNames, vector<char*>*
     int random = rand()%2000;
     strcpy(newStudent->firstName, firstNames->at(random));
     random = rand()%1000;
-    strcpy(s->lastName, lastNames->at(random)); 
+    strcpy(newStudent->lastName, lastNames->at(random)); 
     newStudent->id = numStudents++;
     newStudent->gpa = float(rand()%350+100)/100;
     int hash = (getHash(newStudent->firstName, size) + getHash(newStudent->lastName, size)*3 + newStudent->id)%size;
