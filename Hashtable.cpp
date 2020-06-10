@@ -54,22 +54,61 @@ int main()
   bool running = true;
   while (running == true){
     char input[80];
-    cout<<"Do you want to add a student, print out the students, delete a student, or quit?"<<endl;
+    cout<<"Do you want to add a student, print out the students, delete a student, generate random students, or quit?"<<endl;
     cin.getline(input, sizeof(input));
     strupper(input);
     if (strcmp(input, "ADD") == 0){
-      
+      addStudent(hashTable, size, numStudents);
     }
     else if (strcmp(input, "PRINT") == 0){
-      
+      printStudent(hashTable, size);
     }
-    else if (strcmp(input, 
+    else if (strcmp(input, "DELETE") == 0){
+      deleteStudent(hashTable, size, numStudents);
+    }
+    else if (strcmp(input, "RANDOM") == 0){
+      generateRandom(hashTable, firstNames, lastNames, numStudents, size);
+    }
+    else if (strcmp(input, "QUIT") == 0){
+      running = false;
+    }
+    else{
+      cout<<"That's an invalid command"<<endl;
+    }
   }
+  delete[] hashTable;
+  return 0;
 }
 
 void strupper(char* str){
   int len = strlen(str);
   for (int i = 0; i < len; i++){
     str[i] = touppper(str[i]);
+  }
+}
+
+void addStudent(Node**& hashTable, int& size, int& numStudents){
+  Student* newStudent = new Student();
+  cout<<"Enter the student's first name"<<endl;
+  cin.getline(newStudent->firstName, 20);
+  cout<<"Enter the student's last name"<<endl;
+  cin.getline(newStudent->lastName, 20);
+  cout<<"Enter the student's ID"<<endl;
+  cin>>newStudent->id;
+  cin.clear();
+  cin.ignore(999, '\n');
+  cout<<"Enter the student's GPA"<<endl;
+  cin>>newStudent->gpa;
+  cin.clear();
+  cin.ignore(999, '\n');
+  int hash = (getHash(newStudent->firstName, size)+getHash(newStudent->lastName, size)*3+newStudent->id)%size;
+  int ret = addChain(hashTable, hash, newStudent);
+  if (ret == -1){
+    cout<<"Duplicate student found"<<endl;
+    return;
+  }
+  numStudents++;
+  if (ret > 3 || numStudents > size/2){
+    rehash(hashTable, size);
   }
 }
