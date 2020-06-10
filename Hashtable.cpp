@@ -32,6 +32,25 @@ bool readNames(vector<char*>*, char*, int);
 
 int main()
 {
+  Node** hashTable = NULL;
+  int size = 100;
+  int numStudents = 0;
+  hashTable = new Node*[size];
+  srand(time(NULL));
+  for (int i = 0; i < size; i++){
+    hashTable[i] = NULL;
+  }
+  vector<char*>* firstNames = new vector<char*>();
+  vector<char*>* lastNames = new vector<char*>();
+  char* fileName = new char();
+  strcpy(fileName, "firstnames.txt");
+  if (!readNames(firstNames, fileName, 2000)){
+    return 1;
+  }
+  strcpy(fileName, "lastnames.txt");
+  if (!readNames(lastNames, fileName, 1000)){
+    return 1;
+  }
   bool running = true;
   while (running == true){
     char input[80];
